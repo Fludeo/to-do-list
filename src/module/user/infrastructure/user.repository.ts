@@ -4,10 +4,10 @@ import { User } from '../domain/user.entity';
 
 @Injectable({})
 export class UserRepository implements IUserRepository {
-  getUserById(id: number): Promise<User> {
+  async getUserById(id: number): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  getUserByEmail(id: number): Promise<User> {
+  async getUserByEmail(email: string): Promise<User> {
     throw new Error('Method not implemented.');
   }
 }

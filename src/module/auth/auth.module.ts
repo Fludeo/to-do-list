@@ -1,13 +1,19 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from '../user/user.module';
 import { AUTH_REPOSITORY } from './application/repository/IAuthRepository';
 import { AuthService } from './application/service/auth.service';
 import { AuthRepository } from './infrastructure/auth.repository';
+import { AuthSchema } from './infrastructure/auth.schema';
 import { AuthController } from './interface/auth.controller';
 
 @Module({
-  imports: [UserModule, JwtModule.register({})],
+  imports: [
+    UserModule,
+    JwtModule.register({}),
+    TypeOrmModule.forFeature([AuthSchema]),
+  ],
   controllers: [AuthController],
   providers: [
     AuthService,
