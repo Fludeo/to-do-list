@@ -1,19 +1,22 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
 
 export class SignupDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   name: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   lastName: string;
 
-  @IsEmail()
   @IsNotEmpty()
+  @IsEmail()
   email: string;
 
-  @IsString()
   @IsNotEmpty()
+  @IsString()
+  @Matches('[0-9a-zA-Z]{6,}', '', {
+    message: 'Your password must have a minimun length of 6 ',
+  })
   password: string;
 }

@@ -16,6 +16,12 @@ import { UserController } from './interface/user.controller';
       provide: USER_REPOSITORY,
     },
   ],
-  exports: [UserService],
+  exports: [
+    UserService,
+    {
+      useClass: UserRepository,
+      provide: USER_REPOSITORY,
+    },
+  ],
 })
 export class UserModule {}

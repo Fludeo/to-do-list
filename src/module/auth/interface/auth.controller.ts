@@ -9,11 +9,16 @@ export class AuthController {
 
   @Post(`login`)
   async login(@Body() dto: LoginDto) {
-    return await this.authService.login(dto);
+    try {
+      const token = await this.authService.login(dto);
+      return token;
+    } catch (err) {
+      throw err;
+    }
   }
 
   @Post('signup')
   async signup(@Body() dto: SignupDto) {
-    return await this.authService.signup(dto);
+    await this.authService.signup(dto);
   }
 }

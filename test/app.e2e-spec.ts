@@ -14,11 +14,27 @@ describe('AppController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
   });
-
-  it('/ (GET)', () => {
+  it('/auth/signup (Post) Signup new User', () => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .post('/auth/signup')
+      .send({
+        name: '',
+        lastName: 'lastname',
+        email: 'testuser@email.com',
+        password: '1234567',
+      })
+      .expect(400);
+  });
+
+  it('/auth/signup (Post) Signup new User', () => {
+    return request(app.getHttpServer())
+      .post('/auth/signup')
+      .send({
+        name: 'name',
+        lastName: 'lastname',
+        email: 'testuser@email.com',
+        password: '1234567',
+      })
+      .expect(201);
   });
 });
