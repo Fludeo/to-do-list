@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Task } from '../../domain/task.entity';
 import { NewTaskDto } from '../dto';
+import { PriorityRange, TaskDto } from '../dto/taskDto';
 import { UpdateTaskDto } from '../dto/updateTaskDto';
 
 @Injectable()
@@ -21,5 +22,15 @@ export class TaskMapper {
     taskEntity.priority = dto.priority;
     taskEntity.date = dto.date;
     return taskEntity;
+  }
+
+  fromEntityToTaskDto(taskEntity: Task) {
+    const dto = new TaskDto();
+    dto.id = taskEntity.id;
+    dto.title = taskEntity.title;
+    dto.description = taskEntity.description;
+    dto.priority = taskEntity.priority as PriorityRange;
+    dto.date = taskEntity.date;
+    return dto;
   }
 }

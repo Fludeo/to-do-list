@@ -72,7 +72,7 @@ describe('AppController (e2e)', () => {
       .expect(400);
   });
 
-  it('/tasks (Post and Get)  Adds and gets a task from logged User ', async () => {
+  it('/tasks (Get)  Adds and gets a task from logged User ', async () => {
     const task = {
       title: 'Test task',
       description: 'task description',
@@ -92,5 +92,71 @@ describe('AppController (e2e)', () => {
     expect(response.statusCode).toEqual(200);
     expect(response.body).toHaveProperty('tasks');
     expect(response.body).toHaveProperty('count', 1);
+  });
+
+  it('/tasks (Update)  Adds and updates a task to logged User ', async () => {
+    const task = {
+      title: 'Test task',
+      description: 'task description',
+      date: new Date().toDateString(),
+      priority: 5,
+    };
+    // Adds a new task
+    await request(app.getHttpServer())
+      .post('/tasks')
+      .send(task)
+      .set('Authorization', `Bearer ${access_token}`)
+      .expect(201);
+
+    // Gets the task
+
+    const getRequest = await request(app.getHttpServer())
+      .get('/tasks')
+      .set('Authorization', `Bearer ${access_token}`);
+
+    // Updates recently created task
+    const updatedTask = await getRequest.body.tasks[0];
+    updatedTask.title = 'updated title';
+    await request(app.getHttpServer())
+      .put('/tasks')
+      .send(updatedTask)
+      .set('Authorization', `Bearer ${access_token}`)
+      .expect(200);
+    // Gets the updated task
+    const getUpdatedTask = await request(app.getHttpServer())
+      .get('/tasks')
+      .set('Authorization', `Bearer ${access_token}`)
+      .expect(200);
+
+    expect(getUpdatedTask.body).toHaveProperty('tasks', [updatedTask]);
+  });
+
+  it('/tasks (Delete)  Adds and deletes a task from logged User ', async () => {
+    const task = {
+      title: 'Test task',
+      description: 'task description',
+      date: new Date().toDateString(),
+      priority: 5,
+    };
+    //Adds task
+    await request(app.getHttpServer())
+      .post('/tasks')
+      .send(task)
+      .set('Authorization', `Bearer ${access_token}`)
+      .expect(201);
+
+    // Gets the updated task
+    const getTask = await request(app.getHttpServer())
+      .get('/tasks')
+      .set('Authorization', `Bearer ${access_token}`)
+      .expect(200);
+
+    const taskToDelete = getTask.body.tasks[0];
+    // Deletes task
+    await request(app.getHttpServer())
+      .delete('/tasks')
+      .send(taskToDelete)
+      .set('Authorization', `Bearer ${access_token}`)
+      .expect(200);
   });
 });

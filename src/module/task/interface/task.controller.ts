@@ -21,6 +21,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { NewTaskDto } from '../application/dto';
 import { TaskMapper } from '../application/mapper/TaskMapper';
 import { UpdateTaskDto } from '../application/dto/updateTaskDto';
+import { TaskDto } from '../application/dto/taskDto';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('tasks')
@@ -34,10 +35,13 @@ export class TaskController {
   @Get()
   async getTasks(
     @Req() req: Request,
-  ): Promise<{ tasks: Task[]; count: number }> {
+  ): Promise<{ tasks: TaskDto[]; count: number }> {
     const user = req.user as User;
     const { tasks, count } = await this.taskRepository.getAll(user);
-    return { tasks, count };
+    const tasksDtos = tasks.map((task) =>
+      this.taskMapper.fromEntityToTaskDto(task),
+    );
+    return { tasks: tasksDtos, count };
   }
 
   @Post()
@@ -56,9 +60,9 @@ export class TaskController {
     return await this.taskRepository.saveTask(task);
   }
 
-  @Delete()
-  async deleteTask(@Body() dto: UpdateTaskDto): Promise<Task> {
+  @Delete('')
+  async deleteTask(@Body() dto: UpdateTaskDto): Promise<void> {
     const task = this.taskMapper.updateTaskDtoToEntity(dto);
-    return await this.taskRepository.saveTask(task);
+    return await this.taskRepository.deleteTask(task.id);
   }
 }

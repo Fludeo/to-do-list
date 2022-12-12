@@ -1,9 +1,16 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsInt, IsNotEmpty, IsString, Matches } from 'class-validator';
+import {
+  IsDate,
+  isInt,
+  IsInt,
+  isNotEmpty,
+  IsNotEmpty,
+  IsString,
+} from 'class-validator';
 
 const range = [1, 2, 3, 4, 5] as const;
 export type PriorityRange = typeof range[number];
-export class UpdateTaskDto {
+export class TaskDto {
   @IsNotEmpty()
   @Type(() => Number)
   @IsInt()
