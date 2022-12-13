@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Inject,
+  Param,
   Post,
   Put,
   Req,
@@ -60,9 +61,8 @@ export class TaskController {
     return await this.taskRepository.saveTask(task);
   }
 
-  @Delete('')
-  async deleteTask(@Body() dto: UpdateTaskDto): Promise<void> {
-    const task = this.taskMapper.updateTaskDtoToEntity(dto);
-    return await this.taskRepository.deleteTask(task.id);
+  @Delete(':id')
+  async deleteTask(@Param('id') taskId: number): Promise<void> {
+    return await this.taskRepository.deleteTask(taskId);
   }
 }

@@ -5,7 +5,7 @@ import { DataSource } from 'typeorm';
 import { AuthModule } from './module/auth/auth.module';
 import { TaskModule } from './module/task/task.module';
 import { UserModule } from './module/user/user.module';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { datasourceOptions } from '../ormconfig';
 @Module({
   imports: [
     AuthModule,
@@ -14,11 +14,8 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
-        type: 'better-sqlite3',
-        database: 'development_database.db',
-        synchronize: true,
+        ...datasourceOptions,
         autoLoadEntities: true,
-        namingStrategy: new SnakeNamingStrategy(),
       }),
       dataSourceFactory: async (options) => {
         return new DataSource(options).initialize();

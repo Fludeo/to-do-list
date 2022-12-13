@@ -7,7 +7,7 @@ describe('AppController (e2e)', () => {
   let app: INestApplication;
 
   let access_token = '';
-  const refresh_token = '';
+  let cookieWithRefreshToken = '';
   const user = {
     name: 'name',
     lastName: 'lastname',
@@ -37,6 +37,7 @@ describe('AppController (e2e)', () => {
       .expect(201);
 
     access_token = response.body.access_token;
+    cookieWithRefreshToken = response.get('Set-Cookie')[0].split(';')[0];
   });
 
   it('/auth/signup (Post) Signup with blank fields', async () => {
@@ -46,7 +47,7 @@ describe('AppController (e2e)', () => {
       .send({ name: '', lastName: '', email: '', password: user.password })
       .expect(400);
   });
-  it('/auth/Signup (Post) Signup existent user', async () => {
+  it('/auth/signup (Post) Signup existent user', async () => {
     // Logs new User
     await request(app.getHttpServer())
       .post('/auth/signup')
@@ -154,9 +155,17 @@ describe('AppController (e2e)', () => {
     const taskToDelete = getTask.body.tasks[0];
     // Deletes task
     await request(app.getHttpServer())
-      .delete('/tasks')
-      .send(taskToDelete)
+      .delete(`/tasks/${taskToDelete.id}`)
       .set('Authorization', `Bearer ${access_token}`)
       .expect(200);
+  });
+
+  it('/auth/session (Get)  Gets new access token with refresh token ', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/auth/session')
+      .set('Cookie', `${cookieWithRefreshToken}`)
+      .expect(200);
+
+    expect(response.body).toHaveProperty('access_token');
   });
 });

@@ -9,7 +9,14 @@ export class AuthRepository implements IAuthRepository {
   constructor(private readonly dataSource: DataSource) {
     this.repository = this.dataSource.getRepository(Auth);
   }
-  getRefreshToken(id: number): Promise<string> {
-    throw new Error('Method not implemented.');
+  async saveSession(session: Auth): Promise<void> {
+    this.repository.save(session);
+  }
+  async getSession(token: string): Promise<Auth> {
+    const session = await this.repository.findOne({
+      where: { refreshToken: token },
+      relations: ['user'],
+    });
+    return session;
   }
 }
