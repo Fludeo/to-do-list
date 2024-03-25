@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { ITaskRepository } from '../application/repository/ITaskRepository';
-import { Task } from '../domain/task.entity';
-import { User } from '../../user/domain/user.entity';
+import { ITaskRepository } from '../../application/repository/ITaskRepository';
+import { Task } from '../../domain/task.entity';
+import { User } from '../../../user/domain/user.entity';
 
 @Injectable()
 export class TaskRepository implements ITaskRepository {

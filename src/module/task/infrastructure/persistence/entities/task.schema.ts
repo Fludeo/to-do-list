@@ -1,5 +1,5 @@
 import { EntitySchema } from 'typeorm';
-import { Task } from '../domain/task.entity';
+import { Task } from '../../../domain/task.entity';
 
 export const TaskSchema = new EntitySchema<Task>({
   name: 'Task',
