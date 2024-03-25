@@ -4,8 +4,8 @@ import { AuthModule } from '../auth/auth.module';
 import { TaskMapper } from './application/mapper/TaskMapper';
 import { TASK_REPOSITORY } from './application/repository/ITaskRepository';
 import { TaskService } from './application/service/task.service';
-import { TaskRepository } from './infrastructure/task.repository';
-import { TaskSchema } from './infrastructure/task.schema';
+import { TaskRepository } from './infrastructure/persistence/task.repository';
+import { TaskSchema } from './infrastructure/persistence/entities/task.schema';
 import { TaskController } from './interface/task.controller';
 
 @Module({

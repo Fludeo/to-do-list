@@ -5,7 +5,7 @@ import { DataSource } from 'typeorm';
 import { AuthModule } from './module/auth/auth.module';
 import { TaskModule } from './module/task/task.module';
 import { UserModule } from './module/user/user.module';
-import { datasourceOptions } from '../ormconfig';
+import { datasourceOptions } from './config/ormconfig';
 @Module({
   imports: [
     AuthModule,
