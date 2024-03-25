@@ -15,7 +15,6 @@ jobs:
       HTTPONLY_COOKIE_NAME: todo
       ACCESS_TOKEN_EXPIRE_TIME: 15min
       REFRESH_TOKEN_EXPIRE_TIME: 7d
-      JWT_REFRESH_SECRET: refreshsecret
     runs-on: ubuntu-20.04
 
     strategy:
