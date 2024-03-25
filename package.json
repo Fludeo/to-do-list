@@ -14,8 +14,8 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix",
-    "test": "cross-env NODE_ENV=automated_tests jest NODE_ENV=automated_tests",
-    "test:watch": "cross-env NODE_ENV=automated_tests jest --watch NODE_ENV=automated_tests",
+    "test": "cross-env NODE_ENV=automated_tests jest",
+    "test:watch": "cross-env NODE_ENV=automated_tests jest --watch",
     "test:cov": "cross-env NODE_ENV=automated_tests jest --coverage ",
     "prepare": "husky init"
   },
