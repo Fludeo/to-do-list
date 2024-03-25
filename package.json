@@ -16,7 +16,7 @@
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix",
     "test": "jest NODE_ENV=automated_tests",
     "test:watch": "jest --watch NODE_ENV=automated_tests",
-    "test:cov": "jest --coverage NODE_ENV=automated_tests",
+    "test:cov": "NODE_ENV=automated_tests jest --coverage ",
     "prepare": "husky init"
   },
   "dependencies": {
