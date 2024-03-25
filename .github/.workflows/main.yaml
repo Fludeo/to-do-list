@@ -1,0 +1,41 @@
+name: template-api CI workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build:
+    env:
+      NODE_ENV: automated_tests
+      JWT_SECRET: yoursecret
+      JWT_REFRESH_SECRET: refreshsecret
+      HTTPONLY_COOKIE_NAME: todo
+      ACCESS_TOKEN_EXPIRE_TIME: 15min
+      REFRESH_TOKEN_EXPIRE_TIME: 7d
+      JWT_REFRESH_SECRET: refreshsecret
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: NPM or Yarn install with caching
+        uses: bahmutov/npm-install@v1.6.0
+
+      - name: Build
+        run: |
+          npm run lint
+          npm run format
+          npm run build
+          npm run test:cov

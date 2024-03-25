@@ -6,7 +6,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 dotenv.config();
 export enum ENVIRONMENTS {
   DEVELOPMENT = 'development',
-  AUTOMATED_TEST = 'test',
+  AUTOMATED_TEST = 'automated_tests',
 }
 
 const development: DataSourceOptions = {
